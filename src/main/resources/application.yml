@@ -1,7 +1,23 @@
 # 公共配置文件
-# @author <a href="https://github.com/liyupi">程序员鱼皮</a>
-# @from <a href="https://yupi.icu">编程导航知识星球</a>
+# 
+#
 spring:
+  datasource:
+    url: jdbc:h2:mem:design
+    driver-class-name: org.h2.Driver
+    username: design
+    password: design
+  h2:
+    console:
+      enabled: true
+      path: /myH2
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: true
   application:
     name: springboot-init
   # 默认 dev 环境
@@ -17,13 +33,6 @@ spring:
     # store-type: redis
     # 30 天过期
     timeout: 2592000
-  # 数据库配置
-  # todo 需替换配置
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/my_db
-    username: root
-    password: 123456
   # Redis 配置
   # todo 需替换配置，然后取消注释
 #  redis:
