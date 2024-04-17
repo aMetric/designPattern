@@ -1,27 +1,37 @@
 # 测试配置文件
-# 
-# 
+#
 server:
-  port: 8101
+  port: 8888
+  servlet:
+    context-path: /api
 spring:
-  # 数据库配置
-  # todo 需替换配置
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/my_db
-    username: root
-    password: 123456
-  # Redis 配置
-  # todo 需替换配置
-  redis:
-    database: 1
-    host: localhost
-    port: 6379
-    timeout: 5000
-    password: 123456
-  # Elasticsearch 配置
-  # todo 需替换配置
-  elasticsearch:
-    uris: http://localhost:9200
-    username: root
-    password: 123456
+    url: jdbc:h2:mem:design
+    driver-class-name: org.h2.Driver
+    username: design
+    password: design
+  h2:
+    console:
+      enabled: true
+      path: /myH2
+  jpa:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+gitee:
+  clientId: 97c08914b31830cafc4867bf6391b5506d4d984b9539343eef74c8b6191a2de8
+  clientSecret: cbffc005f2a5493ecf14efce7def08653e4d0aa4c5fee65bca0c6647fd0b9904
+  callBack: http://localhost:8888/api/userInfo/gitee
+  state: GITEE
+  user:
+    prefix: ${gitee.state}@
+    url: https://gitee.com/api/v5/user?access_token=
+  token:
+    url: https://gitee.com/oauth/token?grant_type=authorization_code&client_id=${gitee.clientId}&client_secret=${gitee.clientSecret}&redirect_uri=${gitee.callBack}&code=
+

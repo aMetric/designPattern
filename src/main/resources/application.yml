@@ -1,28 +1,12 @@
 # 公共配置文件
-# 
+#
 #
 spring:
-  datasource:
-    url: jdbc:h2:mem:design
-    driver-class-name: org.h2.Driver
-    username: design
-    password: design
-  h2:
-    console:
-      enabled: true
-      path: /myH2
-  jpa:
-    properties:
-      hibernate:
-        hbm2ddl:
-          auto: update
-        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
-    show-sql: true
   application:
-    name: springboot-init
+    name: designPattern
   # 默认 dev 环境
   profiles:
-    active: dev
+    active: test
   # 支持 swagger3
   mvc:
     pathmatch:
@@ -33,34 +17,41 @@ spring:
     # store-type: redis
     # 30 天过期
     timeout: 2592000
-  # Redis 配置
-  # todo 需替换配置，然后取消注释
-#  redis:
-#    database: 1
-#    host: localhost
-#    port: 6379
-#    timeout: 5000
-#    password: 123456
-  # Elasticsearch 配置
-  # todo 需替换配置，然后取消注释
-#  elasticsearch:
-#    uris: http://localhost:9200
+  # 数据库配置
+  # todo 需替换配置
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/my_db
 #    username: root
 #    password: 123456
+  # Redis 配置
+  # todo 需替换配置，然后取消注释
+  #  redis:
+  #    database: 1
+  #    host: localhost
+  #    port: 6379
+  #    timeout: 5000
+  #    password: 123456
+  # Elasticsearch 配置
+  # todo 需替换配置，然后取消注释
+  #  elasticsearch:
+  #    uris: http://localhost:9200
+  #    username: root
+  #    password: 123456
   # 文件上传
   servlet:
     multipart:
       # 大小限制
       max-file-size: 10MB
-server:
-  address: 0.0.0.0
-  port: 8101
-  servlet:
-    context-path: /api
-    # cookie 30 天过期
-    session:
-      cookie:
-        max-age: 2592000
+#server:
+#  address: 0.0.0.0
+#  port: 8101
+#  servlet:
+#    context-path: /api
+#    # cookie 30 天过期
+#    session:
+#      cookie:
+#        max-age: 2592000
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: false
@@ -109,4 +100,4 @@ knife4j:
       default:
         api-rule: package
         api-rule-resources:
-          - com.yupi.springbootinit.controller
+          - com.coderwhs.designPattern.controller
