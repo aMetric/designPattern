@@ -3,7 +3,6 @@ package com.coderwhs.designPattern.controller;
 import com.coderwhs.designPattern.adapter.Login3rdAdapter;
 import com.coderwhs.designPattern.model.entity.UserInfo;
 import com.coderwhs.designPattern.service.UserInfoService;
-import com.coderwhs.designPattern.service.UserInfoServiceTest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

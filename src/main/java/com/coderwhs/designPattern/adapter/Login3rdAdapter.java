@@ -2,7 +2,7 @@ package com.coderwhs.designPattern.adapter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.coderwhs.designPattern.model.entity.UserInfo;
-import com.coderwhs.designPattern.service.UserInfoService;
+import com.coderwhs.designPattern.service.impl.UserInfoServiceImpl;
 import com.coderwhs.designPattern.utils.HttpClientUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Component
 // @Primary
-public class Login3rdAdapter extends UserInfoService implements ILogin3rdTarget{
+public class Login3rdAdapter extends UserInfoServiceImpl implements ILogin3rdTarget{
 
     @Value("${gitee.state}")
     private String giteeState;
