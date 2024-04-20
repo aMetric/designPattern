@@ -1,4 +1,4 @@
-package com.coderwhs.designPattern.adapter;
+package com.coderwhs.designPattern.pattern.adapter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.coderwhs.designPattern.model.entity.UserInfo;
