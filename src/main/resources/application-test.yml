@@ -10,6 +10,16 @@ spring:
     driver-class-name: org.h2.Driver
     username: design
     password: design
+    # 初始化表结构
+    schema:
+      classpath: classpath:schema.sql
+    # 初始化数据
+    data:
+      classpath: classpath:data.sql
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password: 123456
   h2:
     console:
       #数据库开启console
