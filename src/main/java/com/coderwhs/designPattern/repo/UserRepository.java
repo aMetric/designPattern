@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 /**
  * @Author wuhs
  * @Date 2024/4/13 18:04
- * @Description
+ * @Description 查询所有用户信息
  */
 @Repository
 public interface UserRepository extends JpaRepository<UserInfo,Integer> {

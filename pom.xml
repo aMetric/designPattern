@@ -19,6 +19,7 @@
         <java.version>1.8</java.version>
     </properties>
     <dependencies>
+        <!--redis依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>

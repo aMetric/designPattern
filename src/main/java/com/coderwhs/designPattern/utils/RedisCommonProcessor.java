@@ -6,10 +6,13 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
-@Component
+/**
+ * @author whs
+ */
+// @Component
 public class RedisCommonProcessor {
 
-    @Autowired
+    // @Autowired
     private RedisTemplate redisTemplate;
 
     /**
