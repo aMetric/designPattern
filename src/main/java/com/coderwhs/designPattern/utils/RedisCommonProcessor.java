@@ -9,10 +9,10 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author whs
  */
-// @Component
+@Component
 public class RedisCommonProcessor {
 
-    // @Autowired
+    @Autowired
     private RedisTemplate redisTemplate;
 
     /**

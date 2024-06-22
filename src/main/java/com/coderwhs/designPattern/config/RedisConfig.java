@@ -1,26 +1,37 @@
-
 package com.coderwhs.designPattern.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-/**
- * @author whs
- */
 @Configuration
 public class RedisConfig {
 
+    @Value("${spring.redis.host}")
+    private String redisHost;
+
+    @Value("${spring.redis.port}")
+    private int redisPort;
+
+    @Value("${spring.redis.password}")
+    private String redisPassword;
+
     @Bean
     public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory();
+        RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
+        config.setHostName(redisHost);
+        config.setPort(redisPort);
+        config.setPassword(redisPassword);
+        return new LettuceConnectionFactory(config);
     }
 
     @Bean("redisTemplate")
@@ -32,7 +43,6 @@ public class RedisConfig {
         setSerializeConfig(redisTemplate, redisConnectionFactory);
         return redisTemplate;
     }
-
     private void setSerializeConfig(RedisTemplate<String, Object> redisTemplate, RedisConnectionFactory redisConnectionFactory) {
         //普通key和hashKey采用StringRedisSerializer进行序列化
         StringRedisSerializer redisKeySerializer = new StringRedisSerializer();
@@ -56,3 +66,16 @@ public class RedisConfig {
     }
 
 }
+
+//class DefaultStateMachineContextDeserializer extends JsonDeserializer<DefaultStateMachineContext> {
+//    @Override
+//    public DefaultStateMachineContext deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+//        String EMPTY_STRING = "";
+//        JsonNode node = jsonParser.readValueAsTree();
+//        JsonNode stateJson = node.get("state").get(1);
+//        Object state = stateJson.asText();
+//        return  new DefaultStateMachineContext(state, null, null, null);
+//    }
+//}
+
+

@@ -8,7 +8,6 @@ import com.coderwhs.designPattern.pattern.composite.ProductComposite;
 import com.coderwhs.designPattern.repo.ProductItemRepository;
 import com.coderwhs.designPattern.service.composite.ProductItemService;
 import com.coderwhs.designPattern.utils.CommonUtils;
-import com.coderwhs.designPattern.utils.RedisCache;
 import com.coderwhs.designPattern.utils.RedisCommonProcessor;
 import com.coderwhs.designPattern.utils.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,7 @@ import java.util.stream.Collectors;
 public class ProductItemServiceImpl implements ProductItemService {
 
   @Autowired
-  private RedisCache redisCache;
+  private RedisCommonProcessor redisCommonProcessor;
 
   @Autowired
   private ProductItemRepository productItemRepository;
@@ -40,7 +39,7 @@ public class ProductItemServiceImpl implements ProductItemService {
   @Override
   public ProductComposite fatchAllItems() {
     //先查询redis，如果不为null，直接返回
-    Object cacheItems = redisCache.getCacheObject(RedisKeyUtils.PRODUCT_ITEM_KEY);
+    Object cacheItems = redisCommonProcessor.get(RedisKeyUtils.PRODUCT_ITEM_KEY);
     if(cacheItems != null){
       return (ProductComposite) cacheItems;
     }
@@ -53,7 +52,7 @@ public class ProductItemServiceImpl implements ProductItemService {
     ThrowUtils.throwIf(CommonUtils.objectIsNull(items),ErrorCode.NOT_FOUND_ERROR);
 
     //写到redis
-    redisCache.setCacheObject(RedisKeyUtils.PRODUCT_ITEM_KEY,items);
+    redisCommonProcessor.set(RedisKeyUtils.PRODUCT_ITEM_KEY,items);
 
     return items;
   }
