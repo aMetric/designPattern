@@ -17,7 +17,7 @@ public abstract class AbstractProductItem {
   }
 
   //删除商品类目
-  protected void delProductItem(AbstractProductItem item){
+  protected void delProductChild(AbstractProductItem item){
     throw new UnsupportedOperationException("not support item delete!");
   }
 }

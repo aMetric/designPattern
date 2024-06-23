@@ -26,13 +26,13 @@ public class ProductComposite extends AbstractProductItem{
 
   //增加商品类目
   @Override
-  protected void addProductItem(AbstractProductItem item){
+  public void addProductItem(AbstractProductItem item){
     this.child.add(item);
   }
 
   //删除商品类目
   @Override
-  protected void delProductItem(AbstractProductItem item){
+  public void delProductChild(AbstractProductItem item){
     ProductComposite removeItem = (ProductComposite)item;
 
     Iterator<AbstractProductItem> iterator = child.iterator();
