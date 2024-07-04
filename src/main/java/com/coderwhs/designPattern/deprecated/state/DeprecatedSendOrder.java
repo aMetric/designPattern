@@ -27,6 +27,7 @@ public class DeprecatedSendOrder extends DeprecatedAbstractOrderState {
         redisCommonProcessor.set(orderId,order);
 
         //观察者模式。发送订单发货event
+        super.notifyObserver(orderId,ORDER_WAIT_RECEIVE);
 
         return order;
     }

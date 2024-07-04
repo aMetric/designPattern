@@ -34,6 +34,7 @@ public class DeprecatedCreateOrder extends DeprecatedAbstractOrderState {
         redisCommonProcessor.set(orderId,order,900);
 
         //观察者模式，发送订单创建event
+        super.notifyObserver(orderId,ORDER_WAIT_PAY);
 
         return order;
     }

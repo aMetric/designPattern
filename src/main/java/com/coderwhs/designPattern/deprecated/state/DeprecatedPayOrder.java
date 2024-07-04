@@ -30,6 +30,7 @@ public class DeprecatedPayOrder extends DeprecatedAbstractOrderState {
         redisCommonProcessor.set(orderId,order);
 
         //观察者模式。发送订单支付event
+        super.notifyObserver(orderId,ORDER_WAIT_SEND);
 
         return order;
     }

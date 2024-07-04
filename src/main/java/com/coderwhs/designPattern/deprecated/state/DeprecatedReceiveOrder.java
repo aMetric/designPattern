@@ -25,6 +25,9 @@ public class DeprecatedReceiveOrder extends DeprecatedAbstractOrderState {
 
         //点击收货后，修改订单状态为结束，并更新redis缓存
         order.setState(ORDER_FINISH);
+
+        //观察者模式。发送订单收货event
+        super.notifyObserver(orderId,ORDER_FINISH);
         redisCommonProcessor.remove(orderId);
 
         return order;
