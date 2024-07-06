@@ -27,17 +27,17 @@ public class OrderController {
     }
 
     @PostMapping("/pay")
-    public BaseResponse<Order> payOrder(@RequestParam String productId){
+    public BaseResponse<Order> payOrder(@RequestParam String productId) throws Exception {
         return ResultUtils.success(orderService.payOrder(productId));
     }
 
     @PostMapping("/send")
-    public BaseResponse<Order> sendOrder(@RequestParam String productId){
+    public BaseResponse<Order> sendOrder(@RequestParam String productId) throws Exception {
         return ResultUtils.success(orderService.sendOrder(productId));
     }
 
     @PostMapping("/receive")
-    public BaseResponse<Order> receiveOrder(@RequestParam String productId){
+    public BaseResponse<Order> receiveOrder(@RequestParam String productId) throws Exception {
         return ResultUtils.success(orderService.receiveOrder(productId));
     }
 }
