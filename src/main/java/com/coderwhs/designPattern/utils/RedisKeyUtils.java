@@ -7,4 +7,5 @@ package com.coderwhs.designPattern.utils;
  */
 public class RedisKeyUtils {
   public static final String PRODUCT_ITEM_KEY = "items";
+  public static final String ORDER_KEY = "order";
 }
