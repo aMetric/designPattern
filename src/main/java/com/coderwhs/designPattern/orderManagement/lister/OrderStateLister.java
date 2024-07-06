@@ -5,12 +5,15 @@ import com.coderwhs.designPattern.exception.ThrowUtils;
 import com.coderwhs.designPattern.model.entity.Order;
 import com.coderwhs.designPattern.model.enums.OrderStateChangeActionEnum;
 import com.coderwhs.designPattern.model.enums.OrderStateEnum;
+import com.coderwhs.designPattern.orderManagement.command.OrderCommandImpl;
+import com.coderwhs.designPattern.orderManagement.command.invoker.OrderCommandInvoker;
 import com.coderwhs.designPattern.utils.RedisCommonProcessor;
 import com.coderwhs.designPattern.utils.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.statemachine.annotation.OnTransition;
 import org.springframework.statemachine.annotation.WithStateMachine;
+import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,6 +27,13 @@ public class OrderStateLister {
 
     @Autowired
     private RedisCommonProcessor redisCommonProcessor;
+
+    //持久化状态机
+    @Autowired
+    private StateMachinePersister<OrderStateEnum, OrderStateChangeActionEnum,String> stateMachinePersister;
+
+    @Autowired
+    private OrderCommandImpl orderCommand;
 
     /**
      * 支付状态->发货状态
@@ -41,6 +51,7 @@ public class OrderStateLister {
         redisCommonProcessor.set(order.getOrderId(), order);
 
         //命令模式进行处理
+        new OrderCommandInvoker().invoke(orderCommand,order);
 
         return true;
     }
@@ -56,7 +67,10 @@ public class OrderStateLister {
 
         order.setOrderState(OrderStateEnum.ORDER_WAIT_RECEIVE);
         redisCommonProcessor.set(order.getOrderId(), order);
+
         //命令模式进行相关处理
+        new OrderCommandInvoker().invoke(orderCommand,order);
+
         return true;
     }
 
@@ -77,6 +91,8 @@ public class OrderStateLister {
         redisCommonProcessor.remove(order.getOrderId() + "STATE");
 
         //命令模式进行相关处理
+        new OrderCommandInvoker().invoke(orderCommand,order);
+
         return true;
     }
 }

@@ -3,6 +3,8 @@ package com.coderwhs.designPattern.service.impl;
 import com.coderwhs.designPattern.model.entity.Order;
 import com.coderwhs.designPattern.model.enums.OrderStateChangeActionEnum;
 import com.coderwhs.designPattern.model.enums.OrderStateEnum;
+import com.coderwhs.designPattern.orderManagement.command.OrderCommandImpl;
+import com.coderwhs.designPattern.orderManagement.command.invoker.OrderCommandInvoker;
 import com.coderwhs.designPattern.service.OrderService;
 import com.coderwhs.designPattern.utils.RedisCommonProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private RedisCommonProcessor redisCommonProcessor;
 
+    @Autowired
+    private OrderCommandImpl orderCommand;
+
     /**
      * 创建订单
      *
@@ -45,6 +50,10 @@ public class OrderServiceImpl implements OrderService {
                 .orderState(OrderStateEnum.ORDER_WAIT_PAY)
                 .build();
         redisCommonProcessor.set(orderId,order,900);
+
+        //订单创建初始过程没有被状态机管理，没有被监听
+        new OrderCommandInvoker().invoke(orderCommand, order);
+
         return order;
     }
 
@@ -131,7 +140,7 @@ public class OrderServiceImpl implements OrderService {
             orderStateMachine.start();
 
             //从缓存读取状态机信息
-            stateMachinePersister.persist(orderStateMachine, order.getOrderId() + "STATE");
+            stateMachinePersister.restore(orderStateMachine, order.getOrderId() + "STATE");
 
             //将Message发给监听器
             boolean res = orderStateMachine.sendEvent(message);
