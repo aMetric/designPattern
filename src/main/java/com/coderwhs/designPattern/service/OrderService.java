@@ -1,7 +1,10 @@
 package com.coderwhs.designPattern.service;
 
+import com.alipay.api.AlipayApiException;
 import com.coderwhs.designPattern.common.BaseResponse;
 import com.coderwhs.designPattern.model.entity.Order;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author whs
@@ -37,4 +40,11 @@ public interface OrderService {
      * @return
      */
     Order receiveOrder(String orderId) throws Exception;
+
+    /**
+     * 支付回调接口
+     * @param request
+     * @return
+     */
+    String alipayCallback(HttpServletRequest request) throws Exception;
 }
