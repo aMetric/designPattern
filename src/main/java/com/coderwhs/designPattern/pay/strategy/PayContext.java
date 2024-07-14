@@ -18,7 +18,7 @@ public class PayContext {
     }
 
     //执行策略
-    public String execute(Order order) throws AlipayApiException {
+    public String execute(Order order) throws Exception {
         return this.iPayStrategy.pay(order);
     }
 }

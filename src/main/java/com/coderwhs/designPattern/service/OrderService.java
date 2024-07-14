@@ -5,6 +5,7 @@ import com.coderwhs.designPattern.common.BaseResponse;
 import com.coderwhs.designPattern.model.entity.Order;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 /**
  * @Author whs
@@ -47,4 +48,14 @@ public interface OrderService {
      * @return
      */
     String alipayCallback(HttpServletRequest request) throws Exception;
+
+    /**
+     * 获取支付链接
+     * @param orderId
+     * @param price
+     * @param payType
+     * @return
+     * @throws Exception
+     */
+    String getPayUrl(String orderId,BigDecimal price,Integer payType) throws Exception;
 }

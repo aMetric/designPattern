@@ -10,6 +10,7 @@ import com.coderwhs.designPattern.model.enums.OrderStateChangeActionEnum;
 import com.coderwhs.designPattern.model.enums.OrderStateEnum;
 import com.coderwhs.designPattern.orderManagement.command.OrderCommandImpl;
 import com.coderwhs.designPattern.orderManagement.command.invoker.OrderCommandInvoker;
+import com.coderwhs.designPattern.pay.facade.PayFacade;
 import com.coderwhs.designPattern.service.OrderService;
 import com.coderwhs.designPattern.utils.RedisCommonProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -45,6 +47,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderCommandImpl orderCommand;
+
+    @Autowired
+    private PayFacade payFacade;
 
     /**
      * 创建订单
@@ -176,6 +181,14 @@ public class OrderServiceImpl implements OrderService {
         Order order = payOrder(out_trade_no);
 
         return "支付成功页面跳转，当前订单为："+order;
+    }
+
+    //获取支付链接
+    @Override
+    public String getPayUrl(String orderId,BigDecimal price,Integer payType) throws Exception {
+        Order order = (Order)redisCommonProcessor.get(orderId);
+        order.setPrice(price);
+        return payFacade.pay(order,payType);
     }
 
     /**

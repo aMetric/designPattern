@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigDecimal;
 
 /**
  * @Author whs
@@ -31,8 +32,10 @@ public class OrderController {
     }
 
     @PostMapping("/pay")
-    public BaseResponse<Order> payOrder(@RequestParam String orderId) throws Exception {
-        return ResultUtils.success(orderService.payOrder(orderId));
+    public BaseResponse<String> payOrder(@RequestParam String orderId,
+                                        @RequestParam BigDecimal price,
+                                        @RequestParam Integer payType) throws Exception {
+        return ResultUtils.success(orderService.getPayUrl(orderId,price,payType));
     }
 
     @PostMapping("/send")
@@ -52,7 +55,7 @@ public class OrderController {
      * @return
      * @throws Exception
      */
-    @PostMapping("/alipayCallback")
+    @RequestMapping("/alipayCallback")
     public BaseResponse<String> alipayCallback(HttpServletRequest request) throws Exception {
         return ResultUtils.success(orderService.alipayCallback(request));
     }

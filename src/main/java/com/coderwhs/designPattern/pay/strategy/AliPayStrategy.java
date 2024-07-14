@@ -18,7 +18,7 @@ public class AliPayStrategy implements IPayStrategy{
 
         //创建AliPayClient
         AlipayClient alipayClient = new DefaultAlipayClient(PayConstant.ALIPAY_GATEWAY_URL, PayConstant.APP_ID,
-                PayConstant.APP_PRIVATE_KEY, PayConstant.ALIPAY_PUBLIC_KEY, PayConstant.SIGN_TYPE);
+                PayConstant.APP_PRIVATE_KEY, "JSON","UTF-8",PayConstant.ALIPAY_PUBLIC_KEY, PayConstant.SIGN_TYPE);
 
         // 设置请求参数
         AlipayTradePagePayRequest payRequest = new AlipayTradePagePayRequest();

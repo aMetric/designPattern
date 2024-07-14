@@ -9,6 +9,6 @@ import com.coderwhs.designPattern.model.entity.Order;
  * @description: 抽象策略类
  */
 public interface IPayStrategy {
-    //公共支付方法
-    String pay(Order order) throws AlipayApiException;
+    //公共支付方法，获取支付链接
+    String pay(Order order) throws Exception;
 }
