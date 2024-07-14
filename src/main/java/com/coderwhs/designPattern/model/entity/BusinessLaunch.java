@@ -4,6 +4,9 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+/**
+ * 业务投放类
+ */
 @Data
 @Entity
 @Table(name = "business_launch")

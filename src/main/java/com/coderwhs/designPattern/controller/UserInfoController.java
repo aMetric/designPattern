@@ -1,6 +1,9 @@
 package com.coderwhs.designPattern.controller;
 
 import com.coderwhs.designPattern.adapter.Login3rdAdapter;
+import com.coderwhs.designPattern.common.BaseResponse;
+import com.coderwhs.designPattern.common.ResultUtils;
+import com.coderwhs.designPattern.model.entity.BusinessLaunch;
 import com.coderwhs.designPattern.model.entity.UserInfo;
 import com.coderwhs.designPattern.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -8,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @Author wuhs
@@ -15,7 +19,7 @@ import javax.annotation.Resource;
  * @Description
  */
 @RestController
-@RequestMapping("/userInfo")
+@RequestMapping("/user")
 @Slf4j
 public class UserInfoController {
     @Resource
@@ -37,5 +41,12 @@ public class UserInfoController {
     @PostMapping("/register")
     public String register(@RequestBody UserInfo userInfo){
         return userInfoService.register(userInfo);
+    }
+
+    @PostMapping("/business/launch")
+    public BaseResponse<List<BusinessLaunch>> filterBusinessLaunch(@RequestParam("city") String city,
+                                                                   @RequestParam("sex")String sex,
+                                                                   @RequestParam("product")String product){
+        return ResultUtils.success(userInfoService.filterBusinessLaunch(city, sex, product));
     }
 }

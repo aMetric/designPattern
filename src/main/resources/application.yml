@@ -106,3 +106,17 @@ gitee:
     url: https://gitee.com/api/v5/user?access_token=
   token:
     url: https://gitee.com/oauth/token?grant_type=authorization_code&client_id=${gitee.clientId}&client_secret=${gitee.clientSecret}&redirect_uri=${gitee.callBack}&code=
+
+#apollo
+app:
+  id: designPatternLearning
+apollo:
+  meta: http://127.0.0.1:8080
+  bootstrap:
+    enabled: true
+    eagerLoad:
+      enabled: true
+  cacheDir: E:\code\cache\data\apollo-cache
+logging:
+  level:
+    com: info
