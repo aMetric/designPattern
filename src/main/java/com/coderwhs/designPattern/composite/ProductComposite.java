@@ -1,4 +1,4 @@
-package com.coderwhs.designPattern.pattern.composite;
+package com.coderwhs.designPattern.composite;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,6 +1,6 @@
-package com.coderwhs.designPattern.pattern.visitor;
+package com.coderwhs.designPattern.visitor;
 
-import com.coderwhs.designPattern.pattern.composite.AbstractProductItem;
+import com.coderwhs.designPattern.composite.AbstractProductItem;
 
 /**
  * @Author whs

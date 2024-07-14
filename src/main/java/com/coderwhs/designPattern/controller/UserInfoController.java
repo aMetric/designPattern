@@ -1,6 +1,6 @@
 package com.coderwhs.designPattern.controller;
 
-import com.coderwhs.designPattern.pattern.adapter.Login3rdAdapter;
+import com.coderwhs.designPattern.adapter.Login3rdAdapter;
 import com.coderwhs.designPattern.model.entity.UserInfo;
 import com.coderwhs.designPattern.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;

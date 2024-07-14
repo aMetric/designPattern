@@ -1,8 +1,7 @@
-package com.coderwhs.designPattern.pattern.visitor;
+package com.coderwhs.designPattern.visitor;
 
-import com.coderwhs.designPattern.model.entity.ProductItem;
-import com.coderwhs.designPattern.pattern.composite.AbstractProductItem;
-import com.coderwhs.designPattern.pattern.composite.ProductComposite;
+import com.coderwhs.designPattern.composite.AbstractProductItem;
+import com.coderwhs.designPattern.composite.ProductComposite;
 import com.coderwhs.designPattern.utils.RedisCommonProcessor;
 import com.coderwhs.designPattern.utils.RedisKeyUtils;
 import org.springframework.beans.factory.annotation.Autowired;

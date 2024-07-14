@@ -1,12 +1,11 @@
-package com.coderwhs.designPattern.pattern.visitor;
+package com.coderwhs.designPattern.visitor;
 
 import com.coderwhs.designPattern.common.ErrorCode;
 import com.coderwhs.designPattern.exception.ThrowUtils;
-import com.coderwhs.designPattern.pattern.composite.AbstractProductItem;
-import com.coderwhs.designPattern.pattern.composite.ProductComposite;
+import com.coderwhs.designPattern.composite.AbstractProductItem;
+import com.coderwhs.designPattern.composite.ProductComposite;
 import com.coderwhs.designPattern.utils.RedisCommonProcessor;
 import com.coderwhs.designPattern.utils.RedisKeyUtils;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

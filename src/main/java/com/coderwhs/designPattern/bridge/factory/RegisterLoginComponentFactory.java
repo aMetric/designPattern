@@ -1,8 +1,8 @@
-package com.coderwhs.designPattern.pattern.bridge.factory;
+package com.coderwhs.designPattern.bridge.factory;
 
-import com.coderwhs.designPattern.pattern.bridge.AbstractRegisterLoginComponent;
-import com.coderwhs.designPattern.pattern.bridge.IRegisterLoginFunc;
-import com.coderwhs.designPattern.pattern.bridge.RegisterLoginComponent;
+import com.coderwhs.designPattern.bridge.IRegisterLoginFunc;
+import com.coderwhs.designPattern.bridge.AbstractRegisterLoginComponent;
+import com.coderwhs.designPattern.bridge.RegisterLoginComponent;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

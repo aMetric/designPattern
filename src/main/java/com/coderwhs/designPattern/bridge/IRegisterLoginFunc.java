@@ -1,4 +1,4 @@
-package com.coderwhs.designPattern.pattern.bridge;
+package com.coderwhs.designPattern.bridge;
 
 import com.coderwhs.designPattern.model.entity.UserInfo;
 

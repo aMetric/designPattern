@@ -1,4 +1,4 @@
-package com.coderwhs.designPattern.pattern.adapter;
+package com.coderwhs.designPattern.adapter;
 
 /**
  * @Author wuhs

@@ -1,27 +1,23 @@
-package com.coderwhs.designPattern.pattern.bridge;
+package com.coderwhs.designPattern.adapter;
 
 import com.alibaba.fastjson.JSONObject;
 import com.coderwhs.designPattern.model.entity.UserInfo;
-import com.coderwhs.designPattern.model.enums.LoginTypeEnum;
-import com.coderwhs.designPattern.pattern.bridge.factory.RegisterLoginComponentFactory;
-import com.coderwhs.designPattern.repo.UserRepository;
+import com.coderwhs.designPattern.service.impl.UserInfoServiceImpl;
 import com.coderwhs.designPattern.utils.HttpClientUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
 /**
  * @Author wuhs
- * @Date 2024/4/18 21:02
- * @Description 桥接模式-gitee登入方式
+ * @Date 2024/4/13 21:43
+ * @Description 适配器
  */
 @Component
-public class RegisterLoginByGitee extends AbstractRegisterLoginFunc implements IRegisterLoginFunc{
+// @Primary
+public class Login3rdAdapter extends UserInfoServiceImpl implements ILogin3rdTarget{
 
     @Value("${gitee.state}")
     private String giteeState;
@@ -35,25 +31,13 @@ public class RegisterLoginByGitee extends AbstractRegisterLoginFunc implements I
     @Value("${gitee.user.prefix}")
     private String giteeUserPrefix;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @PostConstruct
-    private void initFuncMap(){
-        // this 是指当前对象的引用，即指向 RegisterLoginByGitee 对象的引用。
-        RegisterLoginComponentFactory.FUNC_MAP.put(LoginTypeEnum.GITEE.getValue(), this);
-    }
-
     @Override
-    public String login3rd(HttpServletRequest request) {
-        String state = request.getParameter("state");
-        String code = request.getParameter("code");
+    public String loginByGitee(String code, String state) {
         if (!giteeState.equals(state)){
             throw new UnsupportedOperationException("state error");
         }
         //请求gitee平台获取token，并携带code
         String tokenUrl = giteeTokenUrl.concat(code);
-        System.out.println("===================tokenUrl = " + tokenUrl);
         JSONObject tokenResObj = HttpClientUtils.execute(tokenUrl, HttpMethod.POST);
         String token = String.valueOf(tokenResObj.get("access_token"));
 
@@ -67,7 +51,6 @@ public class RegisterLoginByGitee extends AbstractRegisterLoginFunc implements I
 
         return autoRegister3rdAndLogin(userName,password);
     }
-
     /**
      * 自动登入方法
      * @param userName
@@ -76,8 +59,8 @@ public class RegisterLoginByGitee extends AbstractRegisterLoginFunc implements I
      */
     private String autoRegister3rdAndLogin(String userName,String password){
         //若第三方账户登入过，则直接登入
-        if(super.commonCheckUserExists(userName,userRepository)){
-            return super.commonLogin(userName,password,userRepository);
+        if(super.checkUserExists(userName)){
+            return super.login(userName,password);
         }
 
         //组装用户信息
@@ -85,9 +68,21 @@ public class RegisterLoginByGitee extends AbstractRegisterLoginFunc implements I
         userInfo.setUserName(userName);
         userInfo.setUserPassword(password);
         userInfo.setCreateDate(new Date());
-
-        super.commonRegister(userInfo,userRepository);
-
-        return super.commonLogin(userName,password,userRepository);
+        super.register(userInfo);
+        return super.login(userName,password);
     }
+
+    @Override
+    public String loginByWechat(String... params) {
+        return null;
+    }
+
+    @Override
+    public String loginByQQ(String... params) {
+        return null;
+    }
+
+    // @Resource
+    // private UserInfoService userInfoService;
+
 }

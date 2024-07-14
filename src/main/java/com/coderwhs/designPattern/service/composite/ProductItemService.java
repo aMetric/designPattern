@@ -1,7 +1,7 @@
 package com.coderwhs.designPattern.service.composite;
 
 import com.coderwhs.designPattern.model.entity.ProductItem;
-import com.coderwhs.designPattern.pattern.composite.ProductComposite;
+import com.coderwhs.designPattern.composite.ProductComposite;
 
 /**
  * @Author wuhs

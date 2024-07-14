@@ -1,8 +1,8 @@
-package com.coderwhs.designPattern.pattern.bridge;
+package com.coderwhs.designPattern.bridge;
 
+import com.coderwhs.designPattern.bridge.factory.RegisterLoginComponentFactory;
 import com.coderwhs.designPattern.model.entity.UserInfo;
 import com.coderwhs.designPattern.model.enums.LoginTypeEnum;
-import com.coderwhs.designPattern.pattern.bridge.factory.RegisterLoginComponentFactory;
 import com.coderwhs.designPattern.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
