@@ -13,7 +13,8 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @Author whs
  * @Date 2024/7/13 22:28
- * @description: 具体工厂类
+ * @description: 具体工厂类-工厂模式
+ * PAY_CONTEXT_MAP的作用是避免对象的多次创建，减小高并发下的内存压力，实现对象的重复利用，也是亨元模式的实现思想
  */
 @Component
 public class PayContextFactory extends AbstractPayContextFactory<PayContext>{
