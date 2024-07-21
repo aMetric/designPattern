@@ -1,31 +1,22 @@
 package com.coderwhs.designPattern.service.impl;
 
-import com.alipay.api.AlipayApiException;
-import com.alipay.api.internal.util.AlipaySignature;
-import com.coderwhs.designPattern.common.ErrorCode;
-import com.coderwhs.designPattern.constant.PayConstant;
-import com.coderwhs.designPattern.exception.ThrowUtils;
 import com.coderwhs.designPattern.model.entity.Order;
 import com.coderwhs.designPattern.model.enums.OrderStateChangeActionEnum;
 import com.coderwhs.designPattern.model.enums.OrderStateEnum;
 import com.coderwhs.designPattern.orderManagement.command.OrderCommandImpl;
 import com.coderwhs.designPattern.orderManagement.command.invoker.OrderCommandInvoker;
 import com.coderwhs.designPattern.pay.facade.PayFacade;
-import com.coderwhs.designPattern.service.OrderService;
+import com.coderwhs.designPattern.service.inter.OrderServiceInterface;
 import com.coderwhs.designPattern.utils.RedisCommonProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * @Author whs
@@ -33,7 +24,8 @@ import java.util.Map;
  * @description: 订单状态处理
  */
 @Service
-public class OrderServiceImpl implements OrderService {
+@Qualifier("OrderServiceImpl")
+public class OrderServiceImpl implements OrderServiceInterface {
 
     @Autowired
     private StateMachine<OrderStateEnum, OrderStateChangeActionEnum> orderStateMachine;
@@ -142,45 +134,6 @@ public class OrderServiceImpl implements OrderService {
             return order;
         }
         return null;
-    }
-
-    /**
-     * 支付回调接口
-     *
-     * @param request
-     * @return
-     */
-    @Override
-    public String alipayCallback(HttpServletRequest request) throws Exception {
-
-        // 获取回调信息
-        Map<String,String> params = new HashMap<String,String>();
-        Map<String,String[]> requestParams = request.getParameterMap();
-        for (Iterator<String> iterator = requestParams.keySet().iterator();iterator.hasNext();){
-            String name = (String)iterator.next();
-            String[] valueArr = (String[])requestParams.get(name);
-            String valueStr = "";
-            for (int i = 0; i < valueArr.length; i++) {
-                valueStr = (i == valueArr.length -1) ? valueStr + valueArr[i] : valueStr + valueArr[i] + ",";
-            }
-            valueStr = new String(valueStr.getBytes(StandardCharsets.ISO_8859_1),StandardCharsets.UTF_8);
-            params.put(name,valueStr);
-        }
-
-        // 验证签名，确保回调接口确实是支付宝平台触发的
-        boolean signVerfied = AlipaySignature.rsaCheckV1(params, PayConstant.ALIPAY_PUBLIC_KEY, String.valueOf(StandardCharsets.UTF_8), PayConstant.SIGN_TYPE);
-
-        // 支付失败则抛出异常
-        ThrowUtils.throwIf(!signVerfied, ErrorCode.OPERATION_ERROR,"callback verify failed");
-
-        String out_trade_no = new String(request.getParameter("out_trade_no").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8);
-        String trade_no = new String(request.getParameter("trade_no").getBytes(StandardCharsets.ISO_8859_1),StandardCharsets.UTF_8);
-        float total_amount = Float.parseFloat(new String(request.getParameter("total_amount").getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
-
-        // 进行相关的业务操作，修改订单状态为待发货状态
-        Order order = payOrder(out_trade_no);
-
-        return "支付成功页面跳转，当前订单为："+order;
     }
 
     //获取支付链接

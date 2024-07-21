@@ -18,4 +18,6 @@ insert into business_launch(id, business_detail, target_city, target_sex, target
 
 insert into products(id, product_id, send_red_bag) values
                    (1, '100', 0),
-                   (2, '101', 1);
+                   (2, '101', 1),
+                   (3, '103', 1),
+                   (4, '104', 0);

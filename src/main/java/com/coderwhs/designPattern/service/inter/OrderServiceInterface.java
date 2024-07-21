@@ -1,10 +1,7 @@
-package com.coderwhs.designPattern.service;
+package com.coderwhs.designPattern.service.inter;
 
-import com.alipay.api.AlipayApiException;
-import com.coderwhs.designPattern.common.BaseResponse;
 import com.coderwhs.designPattern.model.entity.Order;
 
-import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 
 /**
@@ -12,7 +9,7 @@ import java.math.BigDecimal;
  * @Date 2024/7/6 17:03
  * @description: 订单状态处理
  */
-public interface OrderService {
+public interface OrderServiceInterface {
 
     /**
      * 创建订单
@@ -41,13 +38,6 @@ public interface OrderService {
      * @return
      */
     Order receiveOrder(String orderId) throws Exception;
-
-    /**
-     * 支付回调接口
-     * @param request
-     * @return
-     */
-    String alipayCallback(HttpServletRequest request) throws Exception;
 
     /**
      * 获取支付链接
