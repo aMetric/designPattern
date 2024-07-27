@@ -49,4 +49,9 @@ public class UserInfoController {
                                                                    @RequestParam("product")String product){
         return ResultUtils.success(userInfoService.filterBusinessLaunch(city, sex, product));
     }
+
+    @PostMapping("/ticket")
+    public BaseResponse<Object> createTicket(String type, String productId, String content, String title, String bankInfo, String taxId){
+        return ResultUtils.success(userInfoService.createTicket(type, productId, content, title, bankInfo, taxId));
+    }
 }

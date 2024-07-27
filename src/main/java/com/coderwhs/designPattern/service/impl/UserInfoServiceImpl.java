@@ -10,6 +10,7 @@ import com.coderwhs.designPattern.model.enums.DutyChainHandlerEnum;
 import com.coderwhs.designPattern.repo.BusinessLaunchRepository;
 import com.coderwhs.designPattern.repo.UserRepository;
 import com.coderwhs.designPattern.service.UserInfoService;
+import com.coderwhs.designPattern.ticket.proxy.DirectorProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private DirectorProxy directorProxy;
 
     @Autowired
     private BusinessLaunchRepository businessLaunchRepository;
@@ -69,6 +73,22 @@ public class UserInfoServiceImpl implements UserInfoService {
     public List<BusinessLaunch> filterBusinessLaunch(String city, String sex, String product) {
         List<BusinessLaunch> launchList = businessLaunchRepository.findAll();
         return Objects.requireNonNull(buildChain()).processHandler(launchList,city,sex,product);
+    }
+
+    /**
+     * 开具电子发票
+     *
+     * @param type
+     * @param productId
+     * @param content
+     * @param title
+     * @param bankInfo
+     * @param taxId
+     * @return
+     */
+    @Override
+    public Object createTicket(String type, String productId, String content, String title, String bankInfo, String taxId) {
+        return directorProxy.buildTicket(type, productId, content, title, bankInfo, taxId);
     }
 
     /**

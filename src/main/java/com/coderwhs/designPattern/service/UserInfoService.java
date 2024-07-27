@@ -23,4 +23,16 @@ public interface UserInfoService {
      * @return
      */
     List<BusinessLaunch> filterBusinessLaunch(String city,String sex,String product);
+
+    /**
+     * 开具电子发票
+     * @param type
+     * @param productId
+     * @param content
+     * @param title
+     * @param bankInfo
+     * @param taxId
+     * @return
+     */
+    public Object createTicket(String type,String productId,String content,String title,String bankInfo,String taxId);
 }

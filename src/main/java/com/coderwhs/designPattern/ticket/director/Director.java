@@ -31,9 +31,9 @@ public class Director extends AbstractDirector{
             companyTicketBuilder.setCommonInfo(title,product,content);
             companyTicketBuilder.setTaxId(taxId);
             companyTicketBuilder.setBankInfo(bankInfo);
+            return companyTicketBuilder.buildTicket();
         }else{
             throw new UnsupportedOperationException("不支持的发票类型");
         }
-        return null;
     }
 }
