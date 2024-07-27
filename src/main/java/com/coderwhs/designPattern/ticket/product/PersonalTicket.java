@@ -25,10 +25,10 @@ public class PersonalTicket implements Cloneable{
 
     @Override
     public PersonalTicket clone() {
+        PersonalTicket personalTicket = null;
         try {
-            PersonalTicket clone = (PersonalTicket) super.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
-            return clone;
+            personalTicket = (PersonalTicket) super.clone();
+            return personalTicket;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }

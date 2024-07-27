@@ -29,10 +29,10 @@ public class CompanyTicket implements Cloneable{
 
     @Override
     public CompanyTicket clone() {
+        CompanyTicket companyTicket = null;
         try {
-            CompanyTicket clone = (CompanyTicket) super.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
-            return clone;
+            companyTicket = (CompanyTicket) super.clone();
+            return companyTicket;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
