@@ -83,7 +83,7 @@ public class OrderServiceImpl implements OrderServiceInterface {
         //订单创建初始过程没有被状态机管理，没有被监听
         new OrderCommandInvoker().invoke(orderCommand, order);
 
-        OrderAuditLog auditLog = createOrderLog.createAuditLog("0", OrderStateChangeActionEnum.CREATE_ORDER.name(), orderId);
+        OrderAuditLog auditLog = createOrderLog.createAuditLog("USER_NAME", OrderStateChangeActionEnum.CREATE_ORDER.name(), orderId);
         //todo 保存日志
         return order;
     }
@@ -109,7 +109,7 @@ public class OrderServiceImpl implements OrderServiceInterface {
         if(changeStateAction(message,order)){
             return order;
         }
-        OrderAuditLog auditLog = payOrderLog.createAuditLog("0", OrderStateChangeActionEnum.PAY_ORDER.name(), orderId);
+        OrderAuditLog auditLog = payOrderLog.createAuditLog("USER_NAME", OrderStateChangeActionEnum.PAY_ORDER.name(), orderId);
         //todo 保存日志
         return order;
     }
@@ -134,7 +134,7 @@ public class OrderServiceImpl implements OrderServiceInterface {
         if(changeStateAction(message,order)){
             return order;
         }
-        OrderAuditLog auditLog = sendOrderLog.createAuditLog("0", OrderStateChangeActionEnum.SEND_ORDER.name(), orderId);
+        OrderAuditLog auditLog = sendOrderLog.createAuditLog("USER_NAME", OrderStateChangeActionEnum.SEND_ORDER.name(), orderId);
         //todo 保存日志
         return null;
     }
@@ -159,7 +159,7 @@ public class OrderServiceImpl implements OrderServiceInterface {
         if(changeStateAction(message,order)){
             return order;
         }
-        OrderAuditLog auditLog = receiveOrderLog.createAuditLog("0", OrderStateChangeActionEnum.RECEIVE_ORDER.name(), orderId);
+        OrderAuditLog auditLog = receiveOrderLog.createAuditLog("USER_NAME", OrderStateChangeActionEnum.RECEIVE_ORDER.name(), orderId);
         //todo 保存日志
         return null;
     }

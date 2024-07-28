@@ -30,8 +30,8 @@ public abstract class AbstractAuditLogProcessor {
 
     /**
      * 定义订单审计日志的创建步骤-模板方法的核心逻辑
-     * @param account
-     * @param action
+     * @param account 当前用户信息
+     * @param action 用户操作
      * @param orderId
      * @return
      */
