@@ -5,7 +5,7 @@ import com.coderwhs.designPattern.common.BaseResponse;
 import com.coderwhs.designPattern.common.ResultUtils;
 import com.coderwhs.designPattern.model.entity.BusinessLaunch;
 import com.coderwhs.designPattern.model.entity.UserInfo;
-import com.coderwhs.designPattern.service.UserInfoService;
+import com.coderwhs.designPattern.service.inter.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

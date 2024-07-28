@@ -4,7 +4,7 @@ import com.coderwhs.designPattern.model.entity.UserInfo;
 import com.coderwhs.designPattern.model.enums.LoginTypeEnum;
 import com.coderwhs.designPattern.bridge.AbstractRegisterLoginComponent;
 import com.coderwhs.designPattern.bridge.factory.RegisterLoginComponentFactory;
-import com.coderwhs.designPattern.service.UserBridgeService;
+import com.coderwhs.designPattern.service.inter.UserBridgeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

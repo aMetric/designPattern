@@ -1,4 +1,4 @@
-package com.coderwhs.designPattern.service;
+package com.coderwhs.designPattern.service.inter;
 
 import com.coderwhs.designPattern.model.entity.BusinessLaunch;
 import com.coderwhs.designPattern.model.entity.UserInfo;

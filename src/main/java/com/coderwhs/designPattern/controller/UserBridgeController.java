@@ -2,7 +2,7 @@ package com.coderwhs.designPattern.controller;
 
 
 import com.coderwhs.designPattern.model.entity.UserInfo;
-import com.coderwhs.designPattern.service.UserBridgeService;
+import com.coderwhs.designPattern.service.inter.UserBridgeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 

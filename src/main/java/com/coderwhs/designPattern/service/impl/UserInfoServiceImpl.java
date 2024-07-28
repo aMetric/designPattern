@@ -9,7 +9,7 @@ import com.coderwhs.designPattern.model.entity.UserInfo;
 import com.coderwhs.designPattern.model.enums.DutyChainHandlerEnum;
 import com.coderwhs.designPattern.repo.BusinessLaunchRepository;
 import com.coderwhs.designPattern.repo.UserRepository;
-import com.coderwhs.designPattern.service.UserInfoService;
+import com.coderwhs.designPattern.service.inter.UserInfoService;
 import com.coderwhs.designPattern.ticket.proxy.DirectorProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

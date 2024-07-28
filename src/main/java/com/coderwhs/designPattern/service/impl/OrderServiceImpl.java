@@ -11,6 +11,7 @@ import com.coderwhs.designPattern.orderManagement.command.OrderCommandImpl;
 import com.coderwhs.designPattern.orderManagement.command.invoker.OrderCommandInvoker;
 import com.coderwhs.designPattern.pay.facade.PayFacade;
 import com.coderwhs.designPattern.service.inter.OrderServiceInterface;
+import com.coderwhs.designPattern.template.*;
 import com.coderwhs.designPattern.utils.RedisCommonProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -51,6 +52,18 @@ public class OrderServiceImpl implements OrderServiceInterface {
     @Autowired
     private Mediator mediator;
 
+    @Autowired
+    private CreateOrderLog createOrderLog;
+
+    @Autowired
+    private PayOrderLog payOrderLog;
+
+    @Autowired
+    private ReceiveOrderLog receiveOrderLog;
+
+    @Autowired
+    private SendOrderLog sendOrderLog;
+
     /**
      * 创建订单
      *
@@ -70,6 +83,8 @@ public class OrderServiceImpl implements OrderServiceInterface {
         //订单创建初始过程没有被状态机管理，没有被监听
         new OrderCommandInvoker().invoke(orderCommand, order);
 
+        OrderAuditLog auditLog = createOrderLog.createAuditLog("0", OrderStateChangeActionEnum.CREATE_ORDER.name(), orderId);
+        //todo 保存日志
         return order;
     }
 
@@ -94,8 +109,9 @@ public class OrderServiceImpl implements OrderServiceInterface {
         if(changeStateAction(message,order)){
             return order;
         }
-
-        return null;
+        OrderAuditLog auditLog = payOrderLog.createAuditLog("0", OrderStateChangeActionEnum.PAY_ORDER.name(), orderId);
+        //todo 保存日志
+        return order;
     }
 
     /**
@@ -118,6 +134,8 @@ public class OrderServiceImpl implements OrderServiceInterface {
         if(changeStateAction(message,order)){
             return order;
         }
+        OrderAuditLog auditLog = sendOrderLog.createAuditLog("0", OrderStateChangeActionEnum.SEND_ORDER.name(), orderId);
+        //todo 保存日志
         return null;
     }
 
@@ -141,6 +159,8 @@ public class OrderServiceImpl implements OrderServiceInterface {
         if(changeStateAction(message,order)){
             return order;
         }
+        OrderAuditLog auditLog = receiveOrderLog.createAuditLog("0", OrderStateChangeActionEnum.RECEIVE_ORDER.name(), orderId);
+        //todo 保存日志
         return null;
     }
 
