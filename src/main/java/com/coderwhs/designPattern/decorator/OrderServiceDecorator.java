@@ -78,4 +78,9 @@ public class OrderServiceDecorator extends AbstractOrderServiceDecorator{
         }
         return order;
     }
+
+    @Override
+    public void friendPay(String customerName, String orderId, String targetCustomer, String payResult, String role) {
+
+    }
 }

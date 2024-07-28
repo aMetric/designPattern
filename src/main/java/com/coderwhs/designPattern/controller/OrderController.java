@@ -104,4 +104,18 @@ public class OrderController {
         Order order = orderServiceDecorator.decoratorPay(out_trade_no, serviceLevel, total_amount);
         return ResultUtils.success("支付成功页面跳转，当前订单为："+order);
     }
+
+    /**
+     * 朋友代付
+     * @param customerName
+     * @param orderId
+     * @param targetCustomer
+     * @param payResult
+     * @param role B-发起朋友代付请求；P-朋友完成支付
+     * @return
+     */
+    @PostMapping("/friendPay")
+    public void friendPay(String customerName, String orderId, String targetCustomer, String payResult, String role) {
+        orderService.friendPay(customerName, orderId, targetCustomer, payResult, role);
+    }
 }

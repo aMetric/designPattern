@@ -48,4 +48,6 @@ public interface OrderServiceInterface {
      * @throws Exception
      */
     String getPayUrl(String orderId,BigDecimal price,Integer payType) throws Exception;
+
+    void friendPay(String customerName, String orderId, String targetCustomer, String payResult,String role);
 }

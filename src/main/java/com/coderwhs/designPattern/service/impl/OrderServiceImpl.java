@@ -1,5 +1,9 @@
 package com.coderwhs.designPattern.service.impl;
 
+import com.coderwhs.designPattern.mediator.Mediator;
+import com.coderwhs.designPattern.mediator.colleage.AbstractCustomer;
+import com.coderwhs.designPattern.mediator.colleage.Buyer;
+import com.coderwhs.designPattern.mediator.colleage.Payer;
 import com.coderwhs.designPattern.model.entity.Order;
 import com.coderwhs.designPattern.model.enums.OrderStateChangeActionEnum;
 import com.coderwhs.designPattern.model.enums.OrderStateEnum;
@@ -17,6 +21,7 @@ import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
 
 /**
  * @Author whs
@@ -42,6 +47,9 @@ public class OrderServiceImpl implements OrderServiceInterface {
 
     @Autowired
     private PayFacade payFacade;
+
+    @Autowired
+    private Mediator mediator;
 
     /**
      * 创建订单
@@ -142,6 +150,31 @@ public class OrderServiceImpl implements OrderServiceInterface {
         Order order = (Order)redisCommonProcessor.get(orderId);
         order.setPrice(price);
         return payFacade.pay(order,payType);
+    }
+
+    /**
+     * 朋友代付
+     * @param customerName
+     * @param orderId
+     * @param targetCustomer
+     * @param payResult
+     * @param role
+     * @return
+     */
+    @Override
+    public void friendPay(String customerName, String orderId, String targetCustomer, String payResult, String role) {
+        Buyer buyer = new Buyer(mediator, orderId, customerName);
+        Payer payer = new Payer(mediator, orderId, customerName);
+        HashMap<String, AbstractCustomer> map = new HashMap<>();
+        map.put("buyer",buyer);
+        map.put("payer",payer);
+        //将同事类配置到
+        Mediator.customerInstMap.put(orderId,map);
+        if("B".equals(role)){
+            buyer.msgTransfer(orderId,targetCustomer,payResult);
+        }else if("P".equals(role)){
+            payer.msgTransfer(orderId,targetCustomer,payResult);
+        }
     }
 
     /**
